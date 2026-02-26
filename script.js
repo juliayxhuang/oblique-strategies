@@ -7,22 +7,14 @@ const words = [
     "twisting",
     "softening",
     "expanding",
-    "repeating"
+    "repeating",
+    "feeding",
+    "creating",
+    "punching"
 ];
 
 let currentWord = "changing";
 
-word.addEventListener("click", function() {
-
-    const filteredWords = words.filter(w => w !== currentWord);
-
-    const randomIndex = Math.floor(Math.random() * filteredWords.length);
-    const newWord = filteredWords[randomIndex];
-
-    word.textContent = newWord;
-    currentWord = newWord;
-
-});
 
 const wordTwo = document.querySelector(".the-words");
 
@@ -33,19 +25,50 @@ const wordsTwo = [
     "shapes",
     "kites",
     "students",
-    "chairs"
+    "chairs",
+    "kids",
+    "phones",
+    "hot dogs"
 ];
 
 let currentWordTwo = "words";
 
-wordTwo.addEventListener("click", function() {
 
-    const filteredWords = wordsTwo.filter(w => w !== currentWordTwo);
-
+// 🔁 Reusable function (cleaner, avoids repeating logic)
+function getNewWord(array, current) {
+    const filteredWords = array.filter(w => w !== current);
     const randomIndex = Math.floor(Math.random() * filteredWords.length);
-    const newWord = filteredWords[randomIndex];
+    return filteredWords[randomIndex];
+}
 
+
+// 🖱 Click Events (your original behavior)
+word.addEventListener("click", function() {
+    const newWord = getNewWord(words, currentWord);
+    word.textContent = newWord;
+    currentWord = newWord;
+});
+
+wordTwo.addEventListener("click", function() {
+    const newWord = getNewWord(wordsTwo, currentWordTwo);
     wordTwo.textContent = newWord;
     currentWordTwo = newWord;
+});
+
+
+// ⌨️ Keyboard Events (NEW PART)
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "p") {
+        const newWord = getNewWord(words, currentWord);
+        word.textContent = newWord;
+        currentWord = newWord;
+    }
+
+    if (event.key === "o") {
+        const newWord = getNewWord(wordsTwo, currentWordTwo);
+        wordTwo.textContent = newWord;
+        currentWordTwo = newWord;
+    }
 
 });
